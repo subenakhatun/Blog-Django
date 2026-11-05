@@ -124,101 +124,21 @@
                                     <nav>
                                         <!--Desktop menu-->
                                         <ul class="main-menu d-none d-lg-inline font-small">
-                                            <li class="">
-                                                <a href="index.html">Home</a>
-                                            </li>
-                                            <li> <a href="category-list.html">Travel</a> 
+                                            {% for cat in categories%}
+                                            
+                                            <li> <a href="category-list.html">{{ cat.name }}</a> 
                                                 <ul class="mega-menu">
                                                     <li class="sub-mega-menu ">
+                                                        {% for subcat in cat.subcategories.all %}
                                                         <ul>
-                                                            <li><a href="category-list.html">Destinations</a></li>
-                                                            <li><a href="category-list.html">Tour Guides</a></li>
-                                                            <li><a href="category-list.html">Travel Food</a></li>
-                                                            <li><a href="category-list.html">Hotels Booking</a></li>
-                                                            <li><a href="category-list.html">Transport Review</a></li>
-                                                            <li><a href="category-list.html">Travel Healthy</a></li>
+                                                            <li><a href="category-list.html">{{ subcat.name}}</a></li>
                                                         </ul>
+                                                        {% endfor %}
                                                     </li>
                                                 </ul>
                                             </li>
                                             
-                                            <li> <a href="category-grid.html">Guides</a> </li>
-                                            <li> <a href="category-list.html">Food</a> 
-                                                <ul class="mega-menu">
-                                                    <li class="sub-mega-menu sub-mega-menu-width-22">
-                                                        <ul>
-                                                            <li><a href="category-list.html">Meat &amp; Poultry</a></li>
-                                                            <li><a href="category-list.html">Fresh Vegetables</a></li>
-                                                            <li><a href="category-list.html">Herbs &amp; Seasonings</a></li>
-                                                            <li><a href="category-list.html">Cuts &amp; Sprouts</a></li>
-                                                            <li><a href="category-list.html">Exotic Fruits &amp; Veggies</a></li>
-                                                            <li><a href="category-list.html">Packaged Produce</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li class="sub-mega-menu sub-mega-menu-width-22">
-                                                        <ul>
-                                                            <li><a href="category-list.html">Milk &amp; Flavoured Milk</a></li>
-                                                            <li><a href="category-list.html">Butter and Margarine</a></li>
-                                                            <li><a href="category-list.html">Eggs Substitutes</a></li>
-                                                            <li><a href="category-list.html">Marmalades</a></li>
-                                                            <li><a href="category-list.html">Sour Cream</a></li>
-                                                            <li><a href="category-list.html">Cheese</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li class="sub-mega-menu sub-mega-menu-width-22">
-                                                        <ul>
-                                                            <li><a href="category-list.html">Breakfast Sausage</a></li>
-                                                            <li><a href="category-list.html">Dinner Sausage</a></li>
-                                                            <li><a href="category-list.html">Chicken</a></li>
-                                                            <li><a href="category-list.html">Sliced Deli Meat</a></li>
-                                                            <li><a href="category-list.html">Wild Caught Fillets</a></li>
-                                                            <li><a href="category-list.html">Crab and Shellfish</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                                
-                                                </li>
-                                                <li> <a href="category-big.html">Hotels</a>
-                                                    <ul class="mega-menu">
-                                                        <li class="sub-mega-menu ">
-                                                            <ul>
-                                                                <li><a href="category-list.html">Luxuary Resorts</a></li>
-                                                                <li><a href="category-list.html">BUdget Hints </a></li>
-                                                                <li><a href="category-list.html">villas and Resort</a></li>
-                                                                <li><a href="category-list.html">Hotels Booking</a></li>
-                                                                <li><a href="category-list.html">Resort and Hotel Review</a></li>
-                                                                
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li> <a href="category.html">Review</a> </li>
-                                                <li> <a href="category.html">Healthy </a>
-                                                    <ul class="mega-menu">
-                                                        <li class="sub-mega-menu ">
-                                                            <ul>
-                                                                <li><a href="category-list.html">Diet and Nutration</a></li>
-                                                                <li><a href="category-list.html">Fitness and Work-outs</a></li>
-                                                                <li><a href="category-list.html">Healthy Receipies</a></li>
-                                                                <li><a href="category-list.html">Mental Wellness</a></li>
-                                                                <li><a href="category-list.html">Organic Foods</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li> <a href="category.html">Lifestyle</a>
-                                                    <ul class="mega-menu">
-                                                        <li class="sub-mega-menu ">
-                                                            <ul>
-                                                                <li><a href="category-list.html">Fashion and Style</a></li>
-                                                                <li><a href="category-list.html">Travel and Advantures</a></li>
-                                                                <li><a href="category-list.html">Home Decor</a></li>
-                                                                <li><a href="category-list.html">Personal Growth</a></li>
-                                                                <li><a href="category-list.html">Technology and gadgets</a></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </li>
+                                            {% endfor %}  
                                             </ul>
                                         <!--Mobile menu-->
                                         

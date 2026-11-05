@@ -22,7 +22,7 @@ class category(models.Model):
 
 # Subcategory
 class SubCategory(models.Model):
-    category = models.ForeignKey(category,on_delete=models.CASCADE)
+    category = models.ForeignKey(category,on_delete=models.CASCADE, related_name='subcategories')
     name = models.CharField(max_length=100,unique=True)
     slug = models.SlugField(max_length=200,unique=True, blank=True)
 
