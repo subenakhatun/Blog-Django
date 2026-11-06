@@ -40,6 +40,7 @@ class SubCategory(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length = 300)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+    author_image = models.ImageField(upload_to='author_pics/', blank=True, null=True)
     short_description = models.TextField(max_length = 500)
     highlight_description = models.TextField(blank=True, null=True)
     sub_heading = models.CharField(max_length=200, blank=True, null=True)
@@ -50,6 +51,7 @@ class Post(models.Model):
     views_count = models.IntegerField(default=0)
     def __str__(self):
         return self.title
+
 
 
 class Comment(models.Model):
