@@ -1076,7 +1076,25 @@ header .search-icon .ti-close,
 	position: static !important;
 }
 
-
+.main-menu .mega-menu {
+	position: absolute;
+	left: 0;
+	top: 140%;
+	background-color: #fff;
+	width: 100%;
+	padding: 15px;
+	-webkit-transition: all .25s ease 0s;
+	transition: all .25s ease 0s;
+	opacity: 0;
+	visibility: hidden;
+	border-radius: 0 0 3px 3px;
+	z-index: 999;
+	border: 1px solid #fafafa;
+	-webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, .04);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, .04);
+	display: flex;
+	justify-content: space-between;
+}
 
 .main-menu>li.current-item.has-mega-menu .mega-menu .sub-mega-menu {
 	padding-right: 25px
