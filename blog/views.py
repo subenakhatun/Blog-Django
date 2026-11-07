@@ -12,7 +12,7 @@ def home(request):
         
     }
     return render(request,'index.html',context)
-
+# single post show
 def single_post_view(request, pk):
   Post.objects.filter(pk=pk).update(views_count=F("views_count") + 1)
   post = get_object_or_404(Post, pk=pk)
@@ -34,3 +34,56 @@ def single_post_view(request, pk):
   }
   return render(request, "single.html", context)
 
+
+
+
+# register or sign up
+from django.contrib.auth.models import User
+def register_view(request):
+    # from register tamplte get data 
+    if request.method =='POST':
+        username = request.POST.get(username)
+        email = request.POST.get(email)
+        password = request.POST.get(password)
+        confirm_password = request.POST.get(confirm_password)
+        # Buildin user used and save data into database
+        User.objects.create_user(username=username,email=email,password=password,confirm_password=confirm_password)
+
+        # redirect into login page after save data into database
+        return redirect('login_url_view')
+    return render(request,'page-register.html')
+
+
+# after completing registration now login function works
+def login_view(request):
+    if request.method =='POST':
+        username = request.POST.get(username)
+        email = request.POST.get(email)
+        password = request.POST.get(password)
+
+        # match this data information with database data
+        user = authenticate(request,username=username,email=email,password=password)
+
+        # check is everything ok or not
+        if user is not None:
+            # if match login
+            login(request,user)
+            # then direct Dashboard entry
+            return redirect('dashboard_url_view')
+        else:
+            # login page a redirect
+            return render(request,'page-login.html', {'error':'Wrong User Name and password'})
+
+    # Otherwise return only login page
+    return render(request,'page-login.html')
+
+# Dashboard view create after successfully check login logic
+from django.contrib.auth.decorators import login_required
+@login_required(login_url='login_url_view')
+def dashboard_view(request):
+    # request.user: who log in now
+    context ={
+        'Current_User': request.user
+    }
+
+    return render(request,'dashboard.html',context)

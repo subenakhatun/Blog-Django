@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>স্বাগতম, {{ current_user.username }}!</h1>
+    <p>আপনার ইমেল: {{ current_user.email }}</p>
+    <a href="{% url 'logout_url' %}">লগ আউট করুন</a>
+</body>
+</html>
