@@ -1,6 +1,8 @@
 from django.db.models import F
 from django.shortcuts import render,get_object_or_404
 from .models import category,SubCategory,Post,Comment,Subscriber
+from django.contrib.auth import login
+from django.shortcuts import redirect, render
 
 # Create your views here.
 def home(request):
@@ -35,3 +37,37 @@ def single_post_view(request, pk):
   }
   return render(request, "single.html", context)
 
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
+
+
+def register_view(request):
+  if request.method == 'POST':
+    username = request.POST.get('username')
+    email = request.POST.get('email')
+    password = request.POST.get('password')
+    confirm_password = request.POST.get('confirm_password')
+
+    # ১. পাসওয়ার্ড মিলছে কি না চেক করা
+    if password != confirm_password:
+      return render(
+          request,
+          'page-register.html',
+          {'error': 'Password and Confirm Password do not match!'},
+      )
+
+    # ২. ইউজারনেম আগে থেকে আছে কি না চেক করা
+    if User.objects.filter(username=username).exists():
+      return render(
+          request, 'page-register.html', {'error': 'Username already exists!'}
+      )
+
+    # ৩. নতুন ইউজার তৈরি ও ডেটাবেজে সেভ করা
+    User.objects.create_user(
+        username=username, email=email, password=password
+    )
+
+    # ৪. সফলভাবে রেজিস্টার হলে লগইন পেজে রিডাইরেক্ট করবে
+    return redirect('login')
+
+  return render(request, 'page-register.html')
