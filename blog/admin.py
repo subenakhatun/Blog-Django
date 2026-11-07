@@ -9,3 +9,8 @@ admin.site.register(SubCategory)
 admin.site.register(Post)
 admin.site.register(Comment)
 admin.site.register(Subscriber)
+
+
+
+
+

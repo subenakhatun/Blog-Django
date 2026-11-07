@@ -47,8 +47,12 @@ class Post(models.Model):
     detailed_description = models.TextField()
     post_image = models.ImageField(upload_to="posts/")
     photo_click_by = models.CharField(max_length=100, blank=True, null=True)
+    thumbil_photo = models.ImageField(upload_to='news/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     views_count = models.IntegerField(default=0)
+    category = models.ForeignKey(
+        category, on_delete=models.SET_NULL, null=True, blank=True
+    )
     def __str__(self):
         return self.title
 
@@ -62,7 +66,7 @@ class Comment(models.Model):
     email = models.EmailField()
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
+    comment_count = models.IntegerField(default=0)
     
     parent = models.ForeignKey(
         "self",
@@ -83,3 +87,4 @@ class Subscriber(models.Model):
 
     def __str__(self):
         return self.email
+

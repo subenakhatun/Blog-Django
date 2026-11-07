@@ -22,11 +22,15 @@ def single_post_view(request, pk):
   # ৩. লেখকের অন্য সব পোস্টের লিস্ট (বর্তমান পোস্ট বাদে)
   author_other_posts = Post.objects.filter(author=post.author).exclude(pk=pk)
   manucategory = category.objects.all()
+  subscriber = Subscriber.objects.all()
+  
   context = {
       "post": post,
       "comments": comments,
       "author_other_posts": author_other_posts,
       'categories': manucategory,
+      'subscriber':subscriber,
+      
       
   }
   return render(request, "single.html", context)
