@@ -42,12 +42,12 @@ from django.contrib.auth.models import User
 def register_view(request):
     # from register tamplte get data 
     if request.method =='POST':
-        username = request.POST.get(username)
-        email = request.POST.get(email)
-        password = request.POST.get(password)
-        confirm_password = request.POST.get(confirm_password)
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
         # Buildin user used and save data into database
-        User.objects.create_user(username=username,email=email,password=password,confirm_password=confirm_password)
+        User.objects.create_user(username=username,email=email,password=password)
 
         # redirect into login page after save data into database
         return redirect('login_url_view')
@@ -57,12 +57,12 @@ def register_view(request):
 # after completing registration now login function works
 def login_view(request):
     if request.method =='POST':
-        username = request.POST.get(username)
-        email = request.POST.get(email)
-        password = request.POST.get(password)
+        username = request.POST.get('username')
+        # email = request.POST.get('email')
+        password = request.POST.get('password')
 
         # match this data information with database data
-        user = authenticate(request,username=username,email=email,password=password)
+        user = authenticate(request,username=username,password=password)
 
         # check is everything ok or not
         if user is not None:
@@ -82,6 +82,7 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='login_url_view')
 def dashboard_view(request):
     # request.user: who log in now
+    
     context ={
         'Current_User': request.user
     }
