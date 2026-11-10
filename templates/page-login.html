@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+
     <!-- Start Main content -->
     {% block content %}
-    <!-- Start Main content -->
     <main class="bg-grey pt-80 pb-50">
         <div class="container">
             <div class="row justify-content-center">
@@ -15,7 +15,7 @@
                             <form method="post">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                        <input type="text" required="" class="form-control" name="username" placeholder="User Name">
+                                        <input type="text" required="" class="form-control" name="username" placeholder="User ">
                                     </div>
                                     
                                     <div class="form-group">
@@ -51,4 +51,5 @@
         </div>
     </main>
     <!-- End Main content -->
-   {% endblock %}
+    {% endblock %}
+    

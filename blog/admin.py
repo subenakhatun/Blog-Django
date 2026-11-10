@@ -4,6 +4,7 @@ from django.contrib import admin
 
 from .models import category,SubCategory,Post,Comment,Subscriber,Photographer,Tag
 
+# all models register here 
 admin.site.register(category)
 admin.site.register(SubCategory)
 admin.site.register(Post)

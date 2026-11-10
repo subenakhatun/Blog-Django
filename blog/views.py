@@ -12,6 +12,49 @@ def home(request):
         
     }
     return render(request,'index.html',context)
+
+# about page function
+def about_view(request):
+    manucategory = category.objects.all()
+    context ={
+        'categories': manucategory,
+        
+    }
+    return render(request,'page-about.html',context)
+
+
+# contact url function 
+def contact_view(request):
+    manucategory = category.objects.all()
+    context ={
+        'categories': manucategory,
+        
+    }
+    return render(request,'page-contact.html',context)
+
+# Author url function
+def author_view(request):
+    manucategory = category.objects.all()
+    context ={
+        'categories': manucategory,
+        
+    }
+    return render(request,'page-author.html',context)
+
+# 404 error page url function
+def erre_404_view(request):
+    manucategory = category.objects.all()
+    context ={
+        'categories': manucategory,
+        
+    }
+    return render(request,'page-404.html',context)
+
+
+
+
+
+
 # single post show
 def single_post_view(request, pk):
   Post.objects.filter(pk=pk).update(views_count=F("views_count") + 1)
@@ -51,7 +94,8 @@ def register_view(request):
 
         # redirect into login page after save data into database
         return redirect('login_url_view')
-    return render(request,'page-register.html')
+    categories = category.objects.all()
+    return render(request,'page-register.html',{'categories': categories})
 
 
 # after completing registration now login function works
@@ -73,18 +117,54 @@ def login_view(request):
         else:
             # login page a redirect
             return render(request,'page-login.html', {'error':'Wrong User Name and password'})
-
+    
+    categories = category.objects.all()
+  
     # Otherwise return only login page
-    return render(request,'page-login.html')
+    return render(request,'page-login.html',{'categories': categories})
+
+def category_view(request):
+    categories = category.objects.all()
+      
+    # Otherwise return only login page
+    return render(request,'category-list.html',{'categories': categories})
 
 # Dashboard view create after successfully check login logic
 from django.contrib.auth.decorators import login_required
 @login_required(login_url='login_url_view')
 def dashboard_view(request):
     # request.user: who log in now
-    
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        sub_heading = request.POST.get('sub_heading')
+        short_description = request.POST.get('short_description')
+        detailed_description = request.POST.get('detailed_description')
+        photo_click_by = request.POST.get('photo_click_by')
+        author_image = request.FILES.get('author_image')
+        post_image = request.FILES.get('post_image')
+        thumbil_photo = request.FILES.get('thumbil_photo')
+        
+        # Save post into database
+        Post.objects.create(
+            author=request.user,
+            title=title,
+            sub_heading=sub_heading,
+            short_description=short_description,
+            detailed_description=detailed_description,
+            photo_click_by=photo_click_by,
+            author_image=author_image,
+            post_image=post_image,
+            thumbil_photo=thumbil_photo
+        )
+        return redirect(
+            'dashboard_url_view'
+        )
+    # বর্তমান লগইন করা ইউজারের সব পোস্ট ডেটাবেজ থেকে ফিল্টার করে আনা
+    user_posts = Post.objects.filter(author=request.user)
     context ={
-        'Current_User': request.user
+        'Current_User': request.user,
+        'posts': user_posts,
+
     }
 
     return render(request,'dashboard.html',context)

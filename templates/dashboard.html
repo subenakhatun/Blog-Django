@@ -1,10 +1,235 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ব্লগ ইউজার ড্যাশবোর্ড</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        header {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            color: #2c3e50;
+            font-size: 24px;
+        }
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #34495e;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 8px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea.form-control {
+            resize: vertical;
+        }
+        .btn-submit {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-submit:hover {
+            background: #2980b9;
+        }
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .post-item {
+            background: #fff;
+            border: 1px solid #e1e8ed;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+        }
+        .post-item img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+        .post-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .post-content h4 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        .post-content p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .post-meta {
+            font-size: 12px;
+            color: #95a5a6;
+            border-top: 1px solid #f1f1f1;
+            padding-top: 8px;
+        }
+    </style>
 </head>
-<body style="text-align:center">
-    <h1>Welcome {{ current_user.username }}!</h1>
-    <p>Your Name: {{ current_user.email }}</p>
+<body>
+
+    <div class="container">
+       
+        <header>
+            <h1>স্বাগতম,{{ user.username}}</h1>
+            <a href="#" class="logout-btn">লগ আউট</a>
+        </header>
+
+        
+        <div class="card">
+            <h2>নতুন ব্লগ পোস্ট তৈরি করুন</h2>
+            
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>পোস্টের শিরোনাম (Title):</label>
+                    <input type="text" name="title" class="form-control" placeholder="এখানে শিরোনাম লিখুন...">
+                </div>
+
+                <div class="form-group">
+                    <label>সাব-হেডিং (Sub Heading):</label>
+                    <input type="text" name="sub_heading" class="form-control" placeholder="ছোট উপ-শিরোনাম (ঐচ্ছিক)">
+                </div>
+
+                <div class="form-group">
+                    <label>সংক্ষিপ্ত বিবরণ (Short Description):</label>
+                    <textarea class="form-control" name="short_description" rows="2" placeholder="সংক্ষেপে কিছু লিখুন..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>মূল বিবরণ (Detailed Description):</label>
+                    <textarea class="form-control" name="detailed_description" rows="5" placeholder="আপনার মূল ব্লগের বিস্তারিত কনটেন্ট এখানে লিখুন..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>ছবির ক্রেডিট/ক্লিকার (Photo Clicked By):</label>
+                    <input type="text" name="photo_click_by" class="form-control" placeholder="যেমন: জন ড্রো">
+                </div>
+
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label>অথর ইমেজ (Author Image):</label>
+                        <input type="file" name="author_image" class="form-control">
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label>মূল পোস্টের ছবি (Post Main Image):</label>
+                        <input type="file" name="post_image" class="form-control">
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div class="form-group" style="flex: 1; min-width: 150px;">
+                        <label>অতিরিক্ত ছবি ১ (Extra Image 1):</label>
+                        <input type="file" name="thumbil_photo" class="form-control">
+                    </div>
+                    
+                </div>
+
+                <button type="submit" class="btn-submit">পোস্ট পাবলিশ করুন</button>
+            </form>
+        </div>
+
+        
+        <div class="card">
+            <h2>আপনার প্রকাশিত পোস্টসমূহ</h2>
+            
+            <div class="post-grid">
+            
+                    {% for post in posts %}
+                    <div class="post-item">
+                        {% if post.post_image %}
+                            <img src="{{ post.post_image.url }}" alt="Post Image">
+                        {% endif %}
+                        <div class="post-content">
+                            <div>
+                                <h4>{{ post.title }}</h4>
+                                <p>{{ post.short_description|truncatechars:100 }}</p>
+                            </div>
+                            <div class="post-meta">
+                                তারিখ: {{ post.created_at|date:"d M, Y" }} <br>
+                                ভিউস: {{ post.views_count }} বার পঠিত
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="no-post">আপনি এখনও কোনো পোস্ট প্রকাশ করেননি!</p>
+                {% endfor %}
+
+               
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
