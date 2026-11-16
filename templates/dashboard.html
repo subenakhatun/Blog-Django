@@ -149,7 +149,8 @@
         
         <div class="card">
             <h2>নতুন ব্লগ পোস্ট তৈরি করুন</h2>
-            
+             {% csrf_token %}
+
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
@@ -195,7 +196,7 @@
                     </div>
                     
                 </div>
-
+                <div>Category: </div>
                 <button type="submit" class="btn-submit">পোস্ট পাবলিশ করুন</button>
             </form>
         </div>
