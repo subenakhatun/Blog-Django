@@ -10,3 +10,30 @@ class StudentSerializer(serializers.ModelSerializer):
         if value < 18:
             raise serializers.ValidationError
         return value
+
+
+from .models import Teacher,Course,Department,Notice
+# Course Serializers
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+
+# Teacher Serializers
+class TeacherSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Teacher
+        fields = '__all__'
+
+# Department Serializers 
+class DepartmentSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = '__all__'
+
+# Notice Serializers
+class NoticeSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Notice
+        fields = '__all__'

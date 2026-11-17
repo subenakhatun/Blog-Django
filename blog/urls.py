@@ -15,5 +15,6 @@ urlpatterns = [
     path('404/',views.erre_404_view,name='erre_404_view_url'),
     path('contact/',views.contact_view,name='contact_view_url'),
     path('students/', StudentAPIView.as_view(), name='student-api'),
+    path('teachers/', teacher_list_create, name='teacher-list'),
     
 ]

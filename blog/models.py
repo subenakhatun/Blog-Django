@@ -131,7 +131,7 @@ class Subscriber(models.Model):
 
 
 
-    # DRF er jonno  not for blog projrct. Learning perpouse
+# DRF er jonno  not for blog projrct. Learning perpouse
 
 class Students(models.Model):
     name = models.CharField(max_length = 200)
@@ -140,3 +140,39 @@ class Students(models.Model):
 
     def __str__(self):
         return self.name
+
+# Teacher Model (using Function Based APIView)
+class Teacher(models.Model):
+    name = models.CharField(max_length = 100)
+    subject = models.CharField(max_length = 50)
+    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+# Course Model ( Using Class BAsed APIView)
+class Course(models.Model):
+    title = models.CharField(max_length=200)
+    fee = models.DecimalField(max_digits=8, decimal_places=2)
+    duration = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
+
+# Department Model ( Using GenericAPIView )
+
+class Department(models.Model):
+    name = models.CharField(max_length = 100)
+    code = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return self.name
+
+# Notice Model ( Usign Mixins & GenericAPIView )
+class Notice(models.Model):
+    title = models.CharField(max_length = 200)
+    description = models.TextField()
+    date_posted = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

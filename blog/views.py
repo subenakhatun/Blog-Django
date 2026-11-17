@@ -195,3 +195,24 @@ class StudentAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+from .models import Teacher,Course,Department,Notice
+from .serializers import CourseSerializer,TeacherSerializers,DepartmentSerializers,NoticeSerializers
+# rest_framework er api_view theke age api_view  call kore niye jethe hobe
+from rest_framework.decorators import api_view
+
+# Function Based APIView
+@api_view(['GET', 'POST'])
+def teacher_list_create(request):
+    if request.method == 'GET':
+        # teacher model niye asa
+        teacher = Teacher.objects.all()
+        serializer =TeacherSerializers(teacher,many=True) 
+        return Response(serializer.data)
+        # teacher er serial call kora
+    elif request.method == 'POST':
+        serializer =TeacherSerializers(data=request.data) 
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
