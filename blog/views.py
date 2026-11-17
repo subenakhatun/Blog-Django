@@ -168,3 +168,30 @@ def dashboard_view(request):
     }
 
     return render(request,'dashboard.html',context)
+
+
+# DRF er APIViews niye kaj suru kora
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+from .models import Students
+from .serializers import StudentSerializer
+
+class StudentAPIView(APIView):
+    # GET: সার্ভার থেকে সব ডেটা ক্লায়েন্টে পাঠানো (Response Data)
+    def get(self, request):
+        student = Students.objects.all()
+        serializer = StudentSerializer(student,many=True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+
+    # POST: ক্লায়েন্ট থেকে ডেটা গ্রহণ করা (Request Data)
+    def post(self,request):
+        # request.data দিয়ে ক্লায়েন্টের পাঠানো JSON ডেটা ধরা হলো
+        serializer = StudentSerializer(data=request.data)
+
+        # ভ্যালিডেশন চেক করা হচ্ছে
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

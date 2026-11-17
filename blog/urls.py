@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import StudentAPIView
 
 # all page url function path here fo this blog project
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
     path('author/',views.author_view,name='author_view_url'),
     path('404/',views.erre_404_view,name='erre_404_view_url'),
     path('contact/',views.contact_view,name='contact_view_url'),
+    path('students/', StudentAPIView.as_view(), name='student-api'),
     
 ]
