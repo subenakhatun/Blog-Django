@@ -127,3 +127,16 @@ class Subscriber(models.Model):
 
     def __str__(self):
         return self.email
+
+
+
+
+    # DRF er jonno  not for blog projrct. Learning perpouse
+
+class Students(models.Model):
+    name = models.CharField(max_length = 200)
+    email = models.EmailField(unique=True)
+    age = models.IntegerField()
+
+    def __str__(self):
+        return self.name

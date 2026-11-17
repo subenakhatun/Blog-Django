@@ -14,4 +14,5 @@ admin.site.register(Photographer)
 admin.site.register(Tag)
 
 
-
+from .models import Students
+admin.site.register(Students)
