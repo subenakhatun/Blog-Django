@@ -216,3 +216,26 @@ def teacher_list_create(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# GenericAPIView
+from rest_framework.generics import GenericAPIView
+
+
+class DepartmentGenericAPIView(GenericAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializers
+    # genericAPIView a auto get_queryset ar get_serializer mathod auto generate hoye
+    def get(self, request):
+        departments = self.get_queryset()
+        serializer = self.get_serializer(departments, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    
