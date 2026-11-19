@@ -12,7 +12,7 @@ class StudentSerializer(serializers.ModelSerializer):
         return value
 
 
-from .models import Teacher,Course,Department,Notice
+from .models import Teacher,Course,Notice
 # Course Serializers
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,10 +27,10 @@ class TeacherSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 # Department Serializers 
-class DepartmentSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Department
-        fields = '__all__'
+# class DepartmentSerializers(serializers.ModelSerializer):
+#     class Meta:
+#         model = Department
+#         fields = '__all__'
 
 # Notice Serializers
 class NoticeSerializers(serializers.ModelSerializer):

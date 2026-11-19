@@ -161,12 +161,12 @@ class Course(models.Model):
 
 # Department Model ( Using GenericAPIView )
 
-class Department(models.Model):
-    name = models.CharField(max_length = 100)
-    code = models.CharField(max_length=10, unique=True)
+# class Department(models.Model):
+#     name = models.CharField(max_length = 100)
+#     code = models.CharField(max_length=10, unique=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 # Notice Model ( Usign Mixins & GenericAPIView )
 class Notice(models.Model):

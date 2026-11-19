@@ -196,8 +196,8 @@ class StudentAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-from .models import Teacher,Course,Department,Notice
-from .serializers import CourseSerializer,TeacherSerializers,DepartmentSerializers,NoticeSerializers
+from .models import Teacher,Course,Notice
+from .serializers import CourseSerializer,TeacherSerializers,NoticeSerializers
 # rest_framework er api_view theke age api_view  call kore niye jethe hobe
 from rest_framework.decorators import api_view
 
@@ -220,22 +220,47 @@ def teacher_list_create(request):
 # GenericAPIView
 from rest_framework.generics import GenericAPIView
 
+# class DepartmentGenericAPIView(GenericAPIView):
+#     queryset = Department.objects.all()
+#     serializer_class = DepartmentSerializers
+#     # genericAPIView a auto get_queryset ar get_serializer mathod auto generate hoye
+#     def get(self, request):
+#         departments = self.get_queryset()
+#         serializer = self.get_serializer(departments, many=True)
+#         return Response(serializer.data)
 
-class DepartmentGenericAPIView(GenericAPIView):
-    queryset = Department.objects.all()
-    serializer_class = DepartmentSerializers
-    # genericAPIView a auto get_queryset ar get_serializer mathod auto generate hoye
-    def get(self, request):
-        departments = self.get_queryset()
-        serializer = self.get_serializer(departments, many=True)
-        return Response(serializer.data)
+#     def post(self, request):
+#         serializer = self.get_serializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+from rest_framework import generics
 
+# এটি নিজে থেকেই GET (List) এবং POST (Create) হ্যান্ডেল করবে
+# class DepartmentListCreateView(generics.ListCreateAPIView):
+#     queryset = Department.objects.all()
+#     serializer_class = StudentSerializer
 
-    
+# এটি নির্দিষ্ট একটি আইডি দিয়ে GET (Retrieve), PUT (Update) এবং DELETE করবে
+# class DepartmentDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Department.objects.all()
+#     serializer_class = StudentSerializer
+
+# GEnericAPI + Mixins
+
+from rest_framework import mixins
+from .serializers import NoticeSerializers
+
+class NoticeMixinView(mixins.ListModelMixin, 
+                      mixins.CreateModelMixin, 
+                      GenericAPIView):
+    queryset = Notice.objects.all()
+    serializer_class = NoticeSerializers
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)

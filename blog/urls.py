@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import StudentAPIView,teacher_list_create,DepartmentGenericAPIView
+from .views import StudentAPIView,teacher_list_create,NoticeMixinView
 
 # all page url function path here fo this blog project
 urlpatterns = [
@@ -16,5 +16,7 @@ urlpatterns = [
     path('contact/',views.contact_view,name='contact_view_url'),
     path('students/', StudentAPIView.as_view(), name='student-api'),
     path('teachers/', teacher_list_create, name='teacher-list'),
-    path('department/', DepartmentGenericAPIView.as_view(), name='departmnet-list'),
+    # path('department/', DepartmentListCreateView.as_view(), name='departmnet--create-list'),
+    # path('department/<int:pk>/', DepartmentDetailView.as_view(), name='departmnet-list'),
+    path('notice/', NoticeMixinView.as_view(), name='notice-list'),
 ]
